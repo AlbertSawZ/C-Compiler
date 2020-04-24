@@ -1,0 +1,19 @@
+Makefile: fichero en el que se le dice a make qué hacer y cómo.
+
+Si se pone un comando de compilación, ya no valen las reglas implícitas (como CFLAGS).
+
+ESTRUCTURA*****************************************************************************************
+objetivo: dependencia1 dependencia2 ...
+<tab>comando1
+<tab>comando2
+<tab>...
+
+objetivo: lo que se quiere construir; puede ser ejecutable, librería, palabra aleatoria, etc.
+
+dependencia<i>: es el nombre de otro objetivo/ficheros que debe hacerse antes que el nuestro; es un
+archivo del que depende nuestro objetivo.
+
+<tab>: un tabulador.
+
+comando<i>: es lo que se tiene que ejecutar para construir nuestro objetivo; se ejecutan en
+secuencia; puede ser cualquier comando de shell válido.
