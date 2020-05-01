@@ -6,8 +6,9 @@ int main() {
 
 /*
 COMPILE PROGRAM
-cc example1.c -o example1
+gcc example1.c
+./a.out
 
 COMPILE WITH make
-make example1
+make -f Makefile.make
 */
