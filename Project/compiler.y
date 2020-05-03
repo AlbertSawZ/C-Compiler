@@ -1,3 +1,10 @@
+%{
+#include <stdlib.h>
+
+extern FILE *fp;
+FILE * f1;
+%}
+
 %token IDENTIFIER CONSTANT STRING_LITERAL SIZEOF
 %token PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
 %token AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
@@ -425,4 +432,27 @@ char *s;
 {
 	fflush(stdout);
 	printf("\n%*s\n%*s\n", column, "^", column, s);
+}
+
+/*
+Input handling is done by flex.
+*/
+int main (int argc, char *argv[])
+{
+	yyin = fopen(argv[1], "r");
+	//f1 = fopen("output","w");
+
+	if(!yyparse()) {
+		printf("\nParsing complete\n");
+	}
+	else
+	{
+		printf("\nParsing failed\n");
+		exit(0);
+	}
+	
+	fclose(yyin);
+	fclose(f1);
+	intermediateCode();
+    	return 0;
 }

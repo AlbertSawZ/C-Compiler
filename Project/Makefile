@@ -1,5 +1,5 @@
 run:a.out
-	./a.out
+	./a.out test
 
 a.out:compiler.tab.o lex.yy.o
 	gcc compiler.tab.o lex.yy.o -ll
