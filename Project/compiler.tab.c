@@ -65,11 +65,15 @@
 #line 1 "compiler.y" /* yacc.c:339  */
 
 #include <stdlib.h>
+#include <stdio.h>
 
 extern FILE *fp;
+extern FILE *yyin;
+
+//Used for writing the intermediate code to a temporary file
 FILE * f1;
 
-#line 73 "compiler.tab.c" /* yacc.c:339  */
+#line 77 "compiler.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -181,7 +185,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 185 "compiler.tab.c" /* yacc.c:358  */
+#line 189 "compiler.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -484,28 +488,28 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    24,    24,    25,    26,    27,    31,    32,    33,    34,
-      35,    36,    37,    38,    42,    43,    47,    48,    49,    50,
-      51,    52,    56,    57,    58,    59,    60,    61,    65,    66,
-      70,    71,    72,    73,    77,    78,    79,    83,    84,    85,
-      89,    90,    91,    92,    93,    97,    98,    99,   103,   104,
-     108,   109,   113,   114,   118,   119,   123,   124,   128,   129,
-     133,   134,   138,   139,   140,   141,   142,   143,   144,   145,
-     146,   147,   148,   152,   153,   157,   161,   162,   166,   167,
-     168,   169,   170,   171,   175,   176,   180,   181,   185,   186,
-     187,   188,   189,   193,   194,   195,   196,   197,   198,   199,
-     200,   201,   202,   203,   204,   208,   209,   210,   214,   215,
-     219,   220,   224,   228,   229,   230,   231,   235,   236,   240,
-     241,   242,   246,   247,   248,   252,   253,   257,   258,   262,
-     263,   267,   268,   272,   273,   274,   275,   276,   277,   278,
-     282,   283,   284,   285,   289,   290,   295,   296,   300,   301,
-     305,   306,   307,   311,   312,   316,   317,   321,   322,   323,
-     327,   328,   329,   330,   331,   332,   333,   334,   335,   339,
-     340,   341,   345,   346,   350,   351,   352,   353,   354,   355,
-     359,   360,   361,   365,   366,   367,   368,   372,   373,   377,
-     378,   382,   383,   387,   388,   389,   393,   394,   395,   396,
-     400,   401,   402,   403,   404,   408,   409,   413,   414,   418,
-     419,   420,   421
+       0,    28,    28,    29,    30,    31,    35,    36,    37,    38,
+      39,    40,    41,    42,    46,    47,    51,    52,    53,    54,
+      55,    56,    60,    61,    62,    63,    64,    65,    69,    70,
+      74,    75,    76,    77,    81,    82,    83,    87,    88,    89,
+      93,    94,    95,    96,    97,   101,   102,   103,   107,   108,
+     112,   113,   117,   118,   122,   123,   127,   128,   132,   133,
+     137,   138,   142,   143,   144,   145,   146,   147,   148,   149,
+     150,   151,   152,   156,   157,   161,   165,   166,   170,   171,
+     172,   173,   174,   175,   179,   180,   184,   185,   189,   190,
+     191,   192,   193,   197,   198,   199,   200,   201,   202,   203,
+     204,   205,   206,   207,   208,   212,   213,   214,   218,   219,
+     223,   224,   228,   232,   233,   234,   235,   239,   240,   244,
+     245,   246,   250,   251,   252,   256,   257,   261,   262,   266,
+     267,   271,   272,   276,   277,   278,   279,   280,   281,   282,
+     286,   287,   288,   289,   293,   294,   299,   300,   304,   305,
+     309,   310,   311,   315,   316,   320,   321,   325,   326,   327,
+     331,   332,   333,   334,   335,   336,   337,   338,   339,   343,
+     344,   345,   349,   350,   354,   355,   356,   357,   358,   359,
+     363,   364,   365,   369,   370,   371,   372,   376,   377,   381,
+     382,   386,   387,   391,   392,   393,   397,   398,   399,   400,
+     404,   405,   406,   407,   408,   412,   413,   417,   418,   422,
+     423,   424,   425
 };
 #endif
 
@@ -1727,7 +1731,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1731 "compiler.tab.c" /* yacc.c:1646  */
+#line 1735 "compiler.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1955,9 +1959,9 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 424 "compiler.y" /* yacc.c:1906  */
+#line 428 "compiler.y" /* yacc.c:1906  */
 
-#include <stdio.h>
+//#include <stdio.h>
 
 extern char yytext[];
 extern int column;
@@ -1969,14 +1973,15 @@ char *s;
 	printf("\n%*s\n%*s\n", column, "^", column, s);
 }
 
-/*
-Input handling is done by flex.
-*/
-int main (int argc, char *argv[])
+
+//Input handling is done by flex.
+int main(int argc, char *argv[])
 {
 	yyin = fopen(argv[1], "r");
 	//f1 = fopen("output","w");
 
+	//yyparse() is the function to cause parsing to occur. This function reads tokens, executes
+	//actions, and returns when it encounters end-of-input or an unrecoverable syntax error.
 	if(!yyparse()) {
 		printf("\nParsing complete\n");
 	}
@@ -1988,6 +1993,6 @@ int main (int argc, char *argv[])
 	
 	fclose(yyin);
 	fclose(f1);
-	intermediateCode();
+	//intermediateCode();
     	return 0;
 }

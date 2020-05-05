@@ -1,7 +1,11 @@
 %{
 #include <stdlib.h>
+#include <stdio.h>
 
 extern FILE *fp;
+extern FILE *yyin;
+
+//Used for writing the intermediate code to a temporary file
 FILE * f1;
 %}
 
@@ -422,7 +426,7 @@ function_definition
 	;
 
 %%
-#include <stdio.h>
+//#include <stdio.h>
 
 extern char yytext[];
 extern int column;
@@ -434,14 +438,15 @@ char *s;
 	printf("\n%*s\n%*s\n", column, "^", column, s);
 }
 
-/*
-Input handling is done by flex.
-*/
-int main (int argc, char *argv[])
+
+//Input handling is done by flex.
+int main(int argc, char *argv[])
 {
 	yyin = fopen(argv[1], "r");
 	//f1 = fopen("output","w");
 
+	//yyparse() is the function to cause parsing to occur. This function reads tokens, executes
+	//actions, and returns when it encounters end-of-input or an unrecoverable syntax error.
 	if(!yyparse()) {
 		printf("\nParsing complete\n");
 	}
@@ -453,6 +458,6 @@ int main (int argc, char *argv[])
 	
 	fclose(yyin);
 	fclose(f1);
-	intermediateCode();
+	//intermediateCode();
     	return 0;
 }
