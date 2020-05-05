@@ -446,7 +446,7 @@ int main(int argc, char *argv[])
 	//f1 = fopen("output","w");
 
 	//yyparse() is the function to cause parsing to occur. This function reads tokens, executes
-	//actions, and returns when it encounters end-of-input or an unrecoverable syntax error.
+	//actions, and returns when it encounters end-of-input or an unrecoverable syntax error. 
 	if(!yyparse()) {
 		printf("\nParsing complete\n");
 	}
