@@ -12,6 +12,8 @@ IS			(u|U|l|L)*
 void count();
 %}
 
+%option yylineno
+
 %%
 "/*"			{ comment(); }
 
@@ -113,6 +115,9 @@ L?\"(\\.|[^\\"])*\"	{ count(); return(STRING_LITERAL); }
 
 %%
 
+/*
+Function called when input is exhausted. Return 1 if you're done or 0 if more processing is required.
+*/
 yywrap()
 {
 	return(1);

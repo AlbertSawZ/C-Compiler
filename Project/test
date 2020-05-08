@@ -38,7 +38,7 @@ void main()
 			c=d;
 		}
 		d=p*q+c*(a+b);
-		q=r;
+		q=r
 	}
 }
 

@@ -1,13 +1,21 @@
 %{
-#include <stdlib.h>
+
 #include <stdio.h>
+#include <stdlib.h>
 
 extern FILE *fp;
 extern FILE *yyin;
 
-//Used for writing the intermediate code to a temporary file
+/*
+Used for writing the intermediate code to a temporary file
+*/
 FILE * f1;
+
+void yyerror();
+
 %}
+
+%locations
 
 %token IDENTIFIER CONSTANT STRING_LITERAL SIZEOF
 %token PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
@@ -426,27 +434,36 @@ function_definition
 	;
 
 %%
-//#include <stdio.h>
 
 extern char yytext[];
 extern int column;
 
-yyerror(s)
+
+void yyerror(char *s){
+    extern int yylineno;
+    printf("\nError at line %d: %s\n", yylineno, s);
+}
+
+/*yyerror(s)
 char *s;
 {
 	fflush(stdout);
 	printf("\n%*s\n%*s\n", column, "^", column, s);
-}
+}*/
 
 
-//Input handling is done by flex.
+/*
+Input handling is done by flex.
+*/
 int main(int argc, char *argv[])
 {
 	yyin = fopen(argv[1], "r");
 	//f1 = fopen("output","w");
 
-	//yyparse() is the function to cause parsing to occur. This function reads tokens, executes
-	//actions, and returns when it encounters end-of-input or an unrecoverable syntax error. 
+	/*
+	yyparse() is the function to cause parsing to occur. This function reads tokens, executes
+	actions, and returns when it encounters end-of-input or an unrecoverable syntax error. 
+	*/
 	if(!yyparse()) {
 		printf("\nParsing complete\n");
 	}
@@ -457,7 +474,7 @@ int main(int argc, char *argv[])
 	}
 	
 	fclose(yyin);
-	fclose(f1);
+	//fclose(f1);
 	//intermediateCode();
     	return 0;
 }
